@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Warning App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .warning {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .danger {
+            background-color: #ffcccc;
+            color: #cc0000;
+        }
+        .safe {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .weather-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Warning App</h1>
+        <p>Enter a location in the format: city, country (example: New York City, USA)</p>
+
+        <form method="POST">
+            <div class="form-group">
+                <input type="text" name="location" placeholder="Enter location (e.g. London, UK)"
+                       value="{{ location }}" required>
+            </div>
+            <button type="submit">Check Weather</button>
+        </form>
+
+        {% if warning_message %}
+        <div class="warning {% if 'DO NOT GO OUT' in warning_message %}danger{% elif error %}error{% else %}safe{% endif %}">
+            {{ warning_message }}
+        </div>
+        {% endif %}
+
+        {% if weather_data %}
+        <div class="weather-info">
+            <h2>Current Weather in {{ location }}</h2>
+            <p>Temperature: {{ weather_data.temp }}°C / {{ weather_data.temp_f }}°F</p>
+            <p>Condition: {{ weather_data.condition }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
